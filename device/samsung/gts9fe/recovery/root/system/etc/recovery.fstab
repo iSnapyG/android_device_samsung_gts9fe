@@ -1,0 +1,21 @@
+# Mount Point   Fs Type   Device                              Flags/Options
+/boot           emmc      /dev/block/sda15                    flags=display="Boot";backup=1
+/dtbo           emmc      /dev/block/sda13                    flags=display="DTBO";backup=1
+/init_boot      emmc      /dev/block/sda16                    flags=display="Init Boot";backup=1
+
+# --- Dynamic Partitions (Use mapped names for the logical volumes) ---
+# NOTE: These partitions must be mounted as 'logical'
+/system         ext4      /dev/block/mapper/system            flags=display="System";backup=1;logical;first_stage_mount
+/vendor         ext4      /dev/block/mapper/vendor            flags=display="Vendor";backup=1;logical;first_stage_mount
+/product        ext4      /dev/block/mapper/product           flags=display="Product";backup=1;logical;first_stage_mount
+/system_ext     ext4      /dev/block/mapper/system_ext        flags=display="System Ext";backup=1;logical;first_stage_mount
+
+# --- Core Partitions ---
+/cache          ext4      /dev/block/sda33                    flags=display="Cache";wipeingui
+/data           ext4      /dev/block/sda35                    flags=display="Data";length=-268435456;can_be_decrypted;wipeingui
+
+# --- Other Important Partitions ---
+/external_sd    auto      /dev/block/mmcblk1p1                flags=display="Micro SDCard";storage;wipeingui;removable
+/metadata       ext4      /dev/block/sda26                    flags=display="Metadata"
+/efs            emmc      /dev/block/sda1                     flags=display="EFS";backup=1
+/misc           emmc      /dev/block/sda23                    flags=display="Misc"
